@@ -1,0 +1,17 @@
+{
+  "name": "MF Supervision",
+  "short_name": "Supervision",
+  "description": "Supervision secrétaire Motors Factory",
+  "start_url": "/motors-factory-rappels/supervision/",
+  "display": "standalone",
+  "background_color": "#f0f5ff",
+  "theme_color": "#1d4ed8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "../icon-supervision.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

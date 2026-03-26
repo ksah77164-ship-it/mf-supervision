@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MF Supervision">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1d4ed8">
+<title>Supervision — Motors Factory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1rem;}
+.login-box{background:#fff;border-radius:24px;padding:2rem;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(29,78,216,0.3);}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;justify-content:center;}
+.logo-icon{width:50px;height:50px;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.logo-text{font-size:18px;font-weight:800;color:#0f172a;}
+.logo-sub{font-size:11px;color:#94a3b8;font-weight:600;}
+h2{font-size:16px;font-weight:800;color:#0f172a;text-align:center;margin-bottom:0.5rem;}
+h3{font-size:12px;font-weight:600;color:#94a3b8;text-align:center;margin-bottom:1.5rem;}
+label{font-size:11px;font-weight:700;color:#94a3b8;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;}
+input[type=password]{width:100%;background:#f8faff;border:2px solid #e2e8f0;border-radius:12px;padding:12px 14px;font-size:15px;font-family:'Inter',sans-serif;color:#0f172a;margin-bottom:1rem;outline:none;}
+input[type=password]:focus{border-color:#1d4ed8;}
+.login-btn{width:100%;background:linear-gradient(135deg,#1e3a8a,#1d4ed8);color:#fff;border:none;padding:14px;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.erreur{background:#fef2f2;border:1.5px solid #fecaca;border-radius:8px;padding:8px 12px;font-size:13px;color:#dc2626;font-weight:700;text-align:center;margin-bottom:1rem;display:none;}
+.confidentiel{font-size:10px;color:#94a3b8;text-align:center;margin-top:1rem;}
+</style>
+</head>
+<body>
+<div class="login-box">
+  <div class="logo">
+    <div class="logo-icon">&#128065;&#65039;</div>
+    <div>
+      <div class="logo-text">Motors Factory</div>
+      <div class="logo-sub">Espace supervision</div>
+    </div>
+  </div>
+  <h2>Acces restreint</h2>
+  <h3>Reserve aux responsables</h3>
+  <div class="erreur" id="erreur">Mot de passe incorrect</div>
+  <label>Mot de passe</label>
+  <input type="password" id="pwd" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')verifier()"/>
+  <button class="login-btn" onclick="verifier()">Acceder</button>
+  <div class="confidentiel">&#128274; Acces confidentiel</div>
+</div>
+<script>
+const HASH = "d5ff5eccc77188c7ededf7e98c5ed9a43304c231853c02c51742afb06aae8c5a";
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function verifier() {
+  const pwd = document.getElementById('pwd').value;
+  const h = await sha256(pwd);
+  if(h === HASH) {
+    sessionStorage.setItem('mf_supervision_auth', '1');
+    window.location.href = 'index.html';
+  } else {
+    document.getElementById('erreur').style.display='block';
+    document.getElementById('pwd').value='';
+  }
+}
+</script>
+</body>
+</html>
