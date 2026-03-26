@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="MF Supervision">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1d4ed8">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<title>Supervision — Motors Factory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Inter',sans-serif;background:#f0f5ff;min-height:100vh;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);padding:1rem 1rem 0;}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.header-icon{width:38px;height:38px;background:rgba(255,255,255,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.header-title{font-size:16px;font-weight:800;color:#fff;}
+.header-sub{font-size:10px;color:rgba(255,255,255,0.6);margin-top:1px;}
+.header-right{display:flex;align-items:center;gap:8px;}
+.sync-btn{background:#fff;color:#1d4ed8;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.sync-btn.loading{opacity:0.5;pointer-events:none;}
+.date-badge{font-size:11px;color:rgba(255,255,255,0.7);margin-bottom:8px;}
+
+/* ALERTE */
+.alerte{background:#dc2626;color:#fff;padding:8px 12px;font-size:12px;font-weight:700;display:none;margin-bottom:0;}
+.alerte.visible{display:block;}
+
+/* TABS — plus grands sur mobile */
+.tabs{display:flex;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px;margin-bottom:0;}
+.tab{flex:1;padding:10px 4px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);cursor:pointer;border-radius:6px;text-align:center;}
+.tab.actif{background:#fff;color:#1d4ed8;}
+
+.content{padding:1rem;}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
+.kpi{background:#fff;border-radius:12px;padding:14px 12px;border:1px solid #e2e8f0;position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi.bleu::before{background:#1d4ed8;}
+.kpi.vert::before{background:#16a34a;}
+.kpi.rouge::before{background:#dc2626;}
+.kpi.orange::before{background:#d97706;}
+.kpi-nb{font-size:28px;font-weight:800;line-height:1;color:#0f172a;}
+.kpi-label{font-size:11px;font-weight:600;color:#94a3b8;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
+.kpi-sub{font-size:10px;color:#cbd5e1;margin-top:2px;}
+
+/* COMPTE SELECTOR */
+.compte-selector{display:flex;gap:6px;margin-bottom:1rem;}
+.compte-btn{flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;font-family:'Inter',sans-serif;text-align:center;}
+.compte-btn.actif{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
+
+/* COMPTE CARD */
+.compte-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:1rem;}
+.compte-header{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;}
+.compte-nom{font-size:13px;font-weight:800;color:#fff;}
+.compte-email{font-size:10px;color:rgba(255,255,255,0.6);margin-top:1px;}
+.score-circle{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;}
+.score-circle.bon{background:#dcfce7;color:#16a34a;}
+.score-circle.moyen{background:#fef3c7;color:#d97706;}
+.score-circle.mauvais{background:#fee2e2;color:#dc2626;}
+.compte-body{padding:12px 14px;}
+.mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:10px;}
+.mini-stat{background:#f8faff;border-radius:8px;padding:8px 6px;text-align:center;}
+.mini-stat-nb{font-size:20px;font-weight:800;}
+.mini-stat-label{font-size:9px;font-weight:700;color:#94a3b8;margin-top:2px;text-transform:uppercase;}
+.mini-stat.bleu .mini-stat-nb{color:#1d4ed8;}
+.mini-stat.vert .mini-stat-nb{color:#16a34a;}
+.mini-stat.rouge .mini-stat-nb{color:#dc2626;}
+.info-ligne{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #f1f5f9;align-items:center;}
+.info-ligne:last-child{border-bottom:none;}
+.info-label{font-size:11px;color:#64748b;}
+.info-val{font-size:12px;font-weight:700;color:#0f172a;}
+.heures{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px;}
+.heure-chip{background:#eff6ff;border:1px solid #bfdbfe;padding:2px 6px;border-radius:4px;font-size:10px;color:#1d4ed8;font-weight:700;}
+.verdict{margin-top:10px;padding:10px 12px;border-radius:8px;font-size:12px;font-weight:700;}
+.verdict.bon{background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;}
+.verdict.moyen{background:#fffbeb;color:#d97706;border:1px solid #fde68a;}
+.verdict.mauvais{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;}
+
+/* ATTENTE PAR DURÉE */
+.attente-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px;}
+.attente-card{border-radius:8px;padding:8px;text-align:center;}
+.attente-card.c1{background:#fef2f2;border:1px solid #fecaca;}
+.attente-card.c2{background:#fff7ed;border:1px solid #fed7aa;}
+.attente-card.c3{background:#fffbeb;border:1px solid #fde68a;}
+.attente-nb{font-size:18px;font-weight:800;}
+.attente-card.c1 .attente-nb{color:#dc2626;}
+.attente-card.c2 .attente-nb{color:#ea580c;}
+.attente-card.c3 .attente-nb{color:#d97706;}
+.attente-label{font-size:9px;font-weight:700;color:#94a3b8;margin-top:2px;text-transform:uppercase;}
+
+/* HISTORIQUE */
+.historique{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:1rem;}
+.historique-header{background:#f8faff;padding:10px 14px;border-bottom:1px solid #e2e8f0;}
+.historique-title{font-size:13px;font-weight:700;color:#0f172a;}
+.histo-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f1f5f9;}
+.histo-row:last-child{border-bottom:none;}
+.histo-date{font-size:11px;font-weight:700;color:#64748b;min-width:70px;}
+.histo-bars{flex:1;display:flex;gap:4px;align-items:center;}
+.histo-bar{height:6px;border-radius:3px;min-width:2px;}
+.histo-bar.recu{background:#bfdbfe;}
+.histo-bar.envoye{background:#bbf7d0;}
+.histo-bar.ignore{background:#fecaca;}
+.histo-nums{font-size:10px;color:#94a3b8;white-space:nowrap;}
+
+/* MAILS */
+.mail-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:6px;overflow:hidden;}
+.mail-header{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;cursor:pointer;}
+.mail-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.mail-dot.recu{background:#1d4ed8;}
+.mail-dot.envoye{background:#16a34a;}
+.mail-dot.ignore{background:#dc2626;}
+.mail-dot.info{background:#94a3b8;}
+.mail-info{flex:1;min-width:0;}
+.mail-sujet{font-size:13px;font-weight:700;color:#0f172a;word-break:break-word;line-height:1.3;}
+.mail-exp{font-size:11px;color:#64748b;margin-top:2px;word-break:break-word;}
+.mail-meta{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap;}
+.mail-date{font-size:10px;color:#94a3b8;}
+.mail-pj{font-size:10px;background:#eff6ff;color:#1d4ed8;padding:2px 6px;border-radius:4px;font-weight:600;}
+.mail-nr{font-size:10px;background:#fef2f2;color:#dc2626;padding:2px 6px;border-radius:4px;font-weight:600;}
+.arrow{font-size:11px;color:#c7d2fe;flex-shrink:0;margin-top:2px;}
+.mail-body{display:none;padding:0 12px 12px;border-top:1px solid #f1f5f9;}
+.mail-body.open{display:block;}
+.mail-contenu{font-size:12px;color:#475569;line-height:1.7;background:#f8faff;border-radius:8px;padding:10px;border-left:3px solid #bfdbfe;white-space:pre-wrap;word-break:break-word;max-height:250px;overflow-y:auto;margin-top:8px;}
+.reponse-contenu{font-size:12px;color:#166534;line-height:1.7;background:#f0fdf4;border-radius:8px;padding:10px;border-left:3px solid #86efac;white-space:pre-wrap;word-break:break-word;max-height:250px;overflow-y:auto;margin-top:8px;}
+.mail-pjs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.pj-chip{background:#eff6ff;border:1px solid #bfdbfe;padding:3px 8px;border-radius:6px;font-size:11px;color:#1d4ed8;font-weight:600;}
+.badge-ok{font-size:10px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;padding:2px 6px;border-radius:4px;font-weight:700;}
+.badge-nr{font-size:10px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;padding:2px 6px;border-radius:4px;font-weight:700;}
+
+.section-title{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin:0.8rem 0 0.5rem;}
+.vide{text-align:center;padding:2rem;color:#94a3b8;font-size:13px;}
+.erreur{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px;font-size:13px;color:#dc2626;margin-bottom:10px;font-weight:600;}
+.maj-info{font-size:10px;color:#94a3b8;text-align:center;padding:0.5rem;}
+</style>
+</head>
+<body>
+<script>
+if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
+  window.location.replace('login.html');
+}
+</script>
+
+<div class="header">
+  <div class="header-top">
+    <div class="header-left">
+      <div class="header-icon">&#128065;&#65039;</div>
+      <div>
+        <div class="header-title">Supervision</div>
+        <div class="header-sub">Motors Factory — Confidentiel</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="sync-btn" id="sync-btn" onclick="charger()">&#8635; Sync</button>
+    </div>
+  </div>
+  <div class="date-badge" id="date-badge">—</div>
+  <div class="alerte" id="alerte">&#9888;&#65039; ALERTE — Aucune activité détectée avant 10h !</div>
+  <div class="tabs">
+    <div class="tab actif" onclick="afficherOnglet('stats',this)">&#128202; Stats</div>
+    <div class="tab" onclick="afficherOnglet('recus',this)">&#128140; Reçus</div>
+    <div class="tab" onclick="afficherOnglet('reponses',this)">&#9989; Réponses</div>
+    <div class="tab" onclick="afficherOnglet('ignores',this)">&#9888;&#65039; Ignorés</div>
+  </div>
+</div>
+
+<div class="content">
+  <div id="erreur-zone"></div>
+
+  <!-- STATS -->
+  <div id="onglet-stats">
+    <div class="kpi-row">
+      <div class="kpi bleu"><div class="kpi-nb" id="k-recus">—</div><div class="kpi-label">Total reçus</div><div class="kpi-sub">Les 2 comptes</div></div>
+      <div class="kpi vert"><div class="kpi-nb" id="k-envoyes">—</div><div class="kpi-label">Total envoyés</div><div class="kpi-sub">Les 2 comptes</div></div>
+      <div class="kpi rouge"><div class="kpi-nb" id="k-ignores">—</div><div class="kpi-label">Sans réponse</div><div class="kpi-sub">+4h non traités</div></div>
+      <div class="kpi orange"><div class="kpi-nb" id="k-taux">—</div><div class="kpi-label">Taux traitement</div><div class="kpi-sub">Envoyés / reçus</div></div>
+    </div>
+    <div id="stats-comptes"></div>
+  </div>
+
+  <!-- RECUS -->
+  <div id="onglet-recus" style="display:none;">
+    <div class="compte-selector">
+      <button class="compte-btn actif" onclick="switchCompte('recus','1',this)">&#128140; MF Principal</button>
+      <button class="compte-btn" onclick="switchCompte('recus','2',this)">&#128140; MF Compta</button>
+    </div>
+    <div id="recus-1"></div>
+    <div id="recus-2" style="display:none;"></div>
+  </div>
+
+  <!-- REPONSES -->
+  <div id="onglet-reponses" style="display:none;">
+    <div class="compte-selector">
+      <button class="compte-btn actif" onclick="switchCompte('reponses','1',this)">&#9989; MF Principal</button>
+      <button class="compte-btn" onclick="switchCompte('reponses','2',this)">&#9989; MF Compta</button>
+    </div>
+    <div id="reponses-1"></div>
+    <div id="reponses-2" style="display:none;"></div>
+  </div>
+
+  <!-- IGNORES -->
+  <div id="onglet-ignores" style="display:none;">
+    <div class="compte-selector">
+      <button class="compte-btn actif" onclick="switchCompte('ignores','1',this)">&#9888;&#65039; MF Principal</button>
+      <button class="compte-btn" onclick="switchCompte('ignores','2',this)">&#9888;&#65039; MF Compta</button>
+    </div>
+    <div id="ignores-1"></div>
+    <div id="ignores-2" style="display:none;"></div>
+  </div>
+
+  <div class="maj-info" id="maj-info">—</div>
+</div>
+
+<script>
+const API1="https://script.google.com/macros/s/AKfycbya4tlhNw3u_nN37EbR0nrGAGgzt8YuFDv6zair3oDfIky71ccHTTwntYcVWheh1gY0eg/exec";
+const API2="https://script.google.com/macros/s/AKfycbw7n0kPaqYA26ljp59kEW79R2A1qK4j1440ycQ1Tj9QXcj3KI40Vehwm6pdjkZO90EI/exec";
+let s1=null,s2=null,onglet="stats",ouverts={};
+
+function score(s){
+  if(!s||!s.mailsRecus)return{niveau:"moyen",score:"—",verdict:"Pas de données"};
+  let sc=100,pb=[];
+  if((s.mailsIgnores||0)>3){sc-=30;pb.push((s.mailsIgnores)+" sans réponse");}
+  else sc-=10*(s.mailsIgnores||0);
+  if((s.tempsReponseMoyen||0)>120){sc-=20;pb.push("Réponses lentes ("+s.tempsReponseMoyen+" min)");}
+  else if((s.tempsReponseMoyen||0)>60){sc-=10;}
+  if((s.mailsEnvoyes||0)===0&&(s.mailsRecus||0)>0){sc-=30;pb.push("Aucun mail envoyé");}
+  if(!s.premiereActivite||s.premiereActivite==="—"){sc-=20;pb.push("Aucune activité détectée");}
+  sc=Math.max(0,Math.min(100,sc));
+  const niv=sc>=75?"bon":sc>=50?"moyen":"mauvais";
+  return{niveau:niv,score:sc,verdict:(sc>=75?"✅ Bonne activité aujourd'hui":sc>=50?"⚠️ Activité moyenne — "+pb.join(", "):"❌ Insuffisant — "+pb.join(", "))};
+}
+
+function calculerAttenteParDuree(stats){
+  if(!stats||!stats.mailsNonTraites)return{h4:0,h24:0,h48:0};
+  const now=new Date();
+  let h4=0,h24=0,h48=0;
+  stats.mailsNonTraites.forEach(function(m){
+    if(m.depuis){
+      const parts=m.depuis.split(':');
+      const heureMsg=new Date();
+      heureMsg.setHours(parseInt(parts[0]),parseInt(parts[1]),0,0);
+      const diff=(now-heureMsg)/(1000*60*60);
+      if(diff>48)h48++;
+      else if(diff>24)h24++;
+      else if(diff>4)h4++;
+    }
+  });
+  return{h4:h4,h24:h24,h48:h48};
+}
+
+function verifierAlerte(){
+  const now=new Date();
+  const heure=now.getHours();
+  if(heure>=10){
+    const aucuneActivite=(!s1||!s1.premiereActivite||s1.premiereActivite==="—")&&(!s2||!s2.premiereActivite||s2.premiereActivite==="—");
+    if(aucuneActivite){
+      document.getElementById('alerte').classList.add('visible');
+    }
+  }
+}
+
+function rendreStats(){
+  const tr=(s1?s1.mailsRecus||0:0)+(s2?s2.mailsRecus||0:0);
+  const te=(s1?s1.mailsEnvoyes||0:0)+(s2?s2.mailsEnvoyes||0:0);
+  const ti=(s1?s1.mailsIgnores||0:0)+(s2?s2.mailsIgnores||0:0);
+  document.getElementById("k-recus").textContent=tr;
+  document.getElementById("k-envoyes").textContent=te;
+  document.getElementById("k-ignores").textContent=ti;
+  document.getElementById("k-taux").textContent=tr>0?Math.round((te/tr)*100)+"%":"—";
+
+  const comptes=[
+    {s:s1,nom:"MF Principal",email:"motors.factory92@gmail.com"},
+    {s:s2,nom:"MF Compta",email:"motorsfactory.compta@gmail.com"}
+  ];
+
+  document.getElementById("stats-comptes").innerHTML=comptes.map(function(c){
+    if(!c.s||!c.s.compte)return'<div class="compte-card"><div style="padding:1rem;text-align:center;color:#94a3b8;font-size:13px;">Pas de données — Cliquez sur Sync</div></div>';
+    const sc=score(c.s);
+    const att=calculerAttenteParDuree(c.s);
+    return'<div class="compte-card">'
+      +'<div class="compte-header">'
+      +'<div><div class="compte-nom">'+c.nom+'</div><div class="compte-email">'+c.email+'</div></div>'
+      +'<div class="score-circle '+sc.niveau+'">'+sc.score+'</div>'
+      +'</div>'
+      +'<div class="compte-body">'
+      +'<div class="mini-stats">'
+      +'<div class="mini-stat bleu"><div class="mini-stat-nb">'+(c.s.mailsRecus||0)+'</div><div class="mini-stat-label">Reçus</div></div>'
+      +'<div class="mini-stat vert"><div class="mini-stat-nb">'+(c.s.mailsEnvoyes||0)+'</div><div class="mini-stat-label">Envoyés</div></div>'
+      +'<div class="mini-stat rouge"><div class="mini-stat-nb">'+(c.s.mailsIgnores||0)+'</div><div class="mini-stat-label">Ignorés</div></div>'
+      +'</div>'
+      +'<div class="info-ligne"><div class="info-label">⏱ Temps réponse moyen</div><div class="info-val">'+(c.s.tempsReponseMoyen?c.s.tempsReponseMoyen+' min':'—')+'</div></div>'
+      +'<div class="info-ligne"><div class="info-label">✅ Réponses données</div><div class="info-val">'+(c.s.mailsRepondus||0)+'</div></div>'
+      +'<div class="info-ligne"><div class="info-label">🕐 Première activité</div><div class="info-val">'+(c.s.premiereActivite||'—')+'</div></div>'
+      +'<div class="info-ligne"><div class="info-label">🕕 Dernière activité</div><div class="info-val">'+(c.s.derniereActivite||'—')+'</div></div>'
+      +(c.s.heuresActives&&c.s.heuresActives.length>0?'<div class="heures">'+c.s.heuresActives.map(function(h){return'<span class="heure-chip">'+h+'</span>';}).join('')+'</div>':'')
+      +'<div class="attente-grid">'
+      +'<div class="attente-card c1"><div class="attente-nb">'+att.h4+'</div><div class="attente-label">+4h</div></div>'
+      +'<div class="attente-card c2"><div class="attente-nb">'+att.h24+'</div><div class="attente-label">+24h</div></div>'
+      +'<div class="attente-card c3"><div class="attente-nb">'+att.h48+'</div><div class="attente-label">+48h</div></div>'
+      +'</div>'
+      +'<div class="verdict '+sc.niveau+'">'+sc.verdict+'</div>'
+      +'</div></div>';
+  }).join('');
+}
+
+function rendreRecus(stats,id){
+  const el=document.getElementById(id);
+  if(!stats||!stats.listeMailsRecus||!stats.listeMailsRecus.length){el.innerHTML='<div class="vide">Aucun mail reçu aujourd\'hui</div>';return;}
+  el.innerHTML=stats.listeMailsRecus.map(function(m,i){
+    const key=id+i;
+    return'<div class="mail-item">'
+      +'<div class="mail-header" onclick="toggleMail(\''+key+'\')">'
+      +'<div class="mail-dot '+(m.necessiteReponse?'recu':'info')+'"></div>'
+      +'<div class="mail-info">'
+      +'<div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div>'
+      +'<div class="mail-exp">'+(m.expediteur||'').replace(/<.*>/,'').trim()+'</div>'
+      +'<div class="mail-meta">'
+      +'<span class="mail-date">'+(m.date||'')+'</span>'
+      +(m.piecesJointes&&m.piecesJointes.length?'<span class="mail-pj">📎 '+m.piecesJointes.length+' PJ</span>':'')
+      +(m.necessiteReponse?'<span class="mail-nr">⚠️ Réponse requise</span>':'')
+      +'</div></div>'
+      +'<div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div>'
+      +'</div>'
+      +'<div class="mail-body '+(ouverts[key]?'open':'')+'" id="mb-'+key+'">'
+      +'<div class="mail-contenu">'+(m.corps||'(vide)').replace(/</g,'&lt;')+'</div>'
+      +(m.piecesJointes&&m.piecesJointes.length?'<div class="mail-pjs">'+m.piecesJointes.map(function(p){return'<span class="pj-chip">📎 '+p+'</span>';}).join('')+'</div>':'')
+      +'</div></div>';
+  }).join('');
+}
+
+function rendreReponses(stats,id){
+  const el=document.getElementById(id);
+  if(!stats||!stats.listeReponsesEnvoyees||!stats.listeReponsesEnvoyees.length){el.innerHTML='<div class="vide">Aucune réponse envoyée aujourd\'hui</div>';return;}
+  el.innerHTML=stats.listeReponsesEnvoyees.map(function(r,i){
+    const key='rep'+id+i;
+    return'<div class="mail-item">'
+      +'<div class="mail-header" onclick="toggleMail(\''+key+'\')">'
+      +'<div class="mail-dot envoye"></div>'
+      +'<div class="mail-info">'
+      +'<div class="mail-sujet">'+(r.sujet||'(sans objet)')+'</div>'
+      +'<div class="mail-exp">À : '+(r.destinataire||'').replace(/<.*>/,'').trim()+'</div>'
+      +'<div class="mail-meta"><span class="mail-date">'+(r.date||'')+'</span><span class="badge-ok">✓ Envoyé</span></div>'
+      +'</div>'
+      +'<div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div>'
+      +'</div>'
+      +'<div class="mail-body '+(ouverts[key]?'open':'')+'" id="mb-'+key+'">'
+      +'<div class="reponse-contenu">'+(r.corps||'(vide)').replace(/</g,'&lt;')+'</div>'
+      +'</div></div>';
+  }).join('');
+}
+
+function rendreIgnores(stats,id){
+  const el=document.getElementById(id);
+  if(!stats||!stats.mailsNonTraites||!stats.mailsNonTraites.length){el.innerHTML='<div class="vide">✅ Aucun mail ignoré !</div>';return;}
+  el.innerHTML=stats.mailsNonTraites.map(function(m){
+    return'<div class="mail-item">'
+      +'<div class="mail-header">'
+      +'<div class="mail-dot ignore"></div>'
+      +'<div class="mail-info">'
+      +'<div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div>'
+      +'<div class="mail-exp">'+(m.expediteur||'').replace(/<.*>/,'').trim()+'</div>'
+      +'<div class="mail-meta"><span class="mail-date">Depuis '+(m.depuis||'—')+'</span><span class="badge-nr">⚠️ Sans réponse</span></div>'
+      +'</div></div></div>';
+  }).join('');
+}
+
+function toggleMail(key){
+  ouverts[key]=!ouverts[key];
+  const el=document.getElementById('mb-'+key);
+  if(el)el.classList.toggle('open',ouverts[key]);
+  rendreAll();
+}
+
+function rendreAll(){
+  rendreStats();
+  rendreRecus(s1,'recus-1');rendreRecus(s2,'recus-2');
+  rendreReponses(s1,'reponses-1');rendreReponses(s2,'reponses-2');
+  rendreIgnores(s1,'ignores-1');rendreIgnores(s2,'ignores-2');
+}
+
+function afficherOnglet(nom,btn){
+  onglet=nom;
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('actif');});
+  btn.classList.add('actif');
+  ['stats','recus','reponses','ignores'].forEach(function(o){
+    document.getElementById('onglet-'+o).style.display=o===nom?'block':'none';
+  });
+}
+
+function switchCompte(ong,num,btn){
+  btn.closest('.compte-selector').querySelectorAll('.compte-btn').forEach(function(b){b.classList.remove('actif');});
+  btn.classList.add('actif');
+  ['1','2'].forEach(function(n){
+    const el=document.getElementById(ong+'-'+n);
+    if(el)el.style.display=n===num?'block':'none';
+  });
+}
+
+async function charger(){
+  const btn=document.getElementById('sync-btn');
+  btn.classList.add('loading');btn.textContent='...';
+  document.getElementById('erreur-zone').innerHTML='';
+  const now=new Date();
+  document.getElementById('date-badge').textContent=now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})+' · '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  try{
+    const results=await Promise.all([
+      fetch(API1+'?t='+Date.now()).then(function(r){return r.json();}).catch(function(){return null;}),
+      fetch(API2+'?t='+Date.now()).then(function(r){return r.json();}).catch(function(){return null;})
+    ]);
+    s1=results[0];s2=results[1];
+    verifierAlerte();
+    rendreAll();
+    document.getElementById('maj-info').textContent='Synchro à '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' · Auto toutes les 30 min';
+  }catch(e){
+    document.getElementById('erreur-zone').innerHTML='<div class="erreur">Erreur de connexion.</div>';
+  }
+  btn.classList.remove('loading');btn.textContent='↻ Sync';
+}
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('../sw.js').catch(function(){});
+}
+
+charger();
+setInterval(charger,30*60*1000);
+</script>
+</body>
+</html>
