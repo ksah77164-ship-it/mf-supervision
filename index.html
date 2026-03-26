@@ -25,10 +25,23 @@ body{font-family:'Inter',sans-serif;background:#f0f5ff;min-height:100vh;}
 .sync-btn.loading{opacity:0.5;pointer-events:none;}
 .alerte{background:#dc2626;color:#fff;padding:8px 12px;font-size:12px;font-weight:700;display:none;}
 .alerte.visible{display:block;}
-.tabs{display:flex;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px;margin-bottom:0;}
-.tab{flex:1;padding:10px 4px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.6);cursor:pointer;border-radius:6px;text-align:center;}
+.tabs{display:flex;background:rgba(255,255,255,0.1);border-radius:8px;padding:3px;}
+.tab{flex:1;padding:8px 2px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.6);cursor:pointer;border-radius:6px;text-align:center;}
 .tab.actif{background:#fff;color:#1d4ed8;}
 .content{padding:1rem;}
+
+/* STATS PERIODE */
+.periode-selector{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:12px;margin-bottom:1rem;}
+.periode-title{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.periode-btns{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.periode-btn{padding:6px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:11px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;font-family:'Inter',sans-serif;}
+.periode-btn.actif{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
+.dates-libres{display:none;gap:6px;align-items:center;flex-wrap:wrap;}
+.dates-libres.visible{display:flex;}
+.date-input-small{background:#f8faff;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 10px;font-size:12px;font-family:'Inter',sans-serif;color:#0f172a;flex:1;min-width:120px;}
+.appliquer-btn{background:#1d4ed8;color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+.periode-info{font-size:11px;color:#94a3b8;margin-top:6px;}
+
 .kpi-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:1rem;}
 .kpi{background:#fff;border-radius:12px;padding:14px 12px;border:1px solid #e2e8f0;position:relative;overflow:hidden;}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
@@ -39,6 +52,7 @@ body{font-family:'Inter',sans-serif;background:#f0f5ff;min-height:100vh;}
 .kpi-nb{font-size:28px;font-weight:800;line-height:1;color:#0f172a;}
 .kpi-label{font-size:11px;font-weight:600;color:#94a3b8;margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
 .kpi-sub{font-size:10px;color:#cbd5e1;margin-top:2px;}
+
 .compte-selector{display:flex;gap:6px;margin-bottom:1rem;}
 .compte-btn{flex:1;padding:10px 8px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:12px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;font-family:'Inter',sans-serif;text-align:center;}
 .compte-btn.actif{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
@@ -79,35 +93,9 @@ body{font-family:'Inter',sans-serif;background:#f0f5ff;min-height:100vh;}
 .attente-card.c3 .attente-nb{color:#d97706;}
 .attente-label{font-size:9px;font-weight:700;color:#94a3b8;margin-top:2px;text-transform:uppercase;}
 
-/* HISTORIQUE */
-.historique-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px;margin-bottom:1rem;}
-.historique-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
-.date-picker-row{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;}
-.date-picker-row label{font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;}
-.date-input{background:#f8faff;border:1.5px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:13px;font-family:'Inter',sans-serif;color:#0f172a;flex:1;}
-.date-input:focus{border-color:#1d4ed8;outline:none;}
-.recherche-btn{background:#1d4ed8;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
-.filtre-compte{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
-.filtre-compte-btn{padding:5px 12px;border-radius:6px;border:1.5px solid #e2e8f0;font-size:11px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;font-family:'Inter',sans-serif;}
-.filtre-compte-btn.actif{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
-.histo-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:6px;overflow:hidden;cursor:pointer;}
-.histo-header{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;}
-.histo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
-.histo-dot.recu{background:#1d4ed8;}
-.histo-dot.envoye{background:#16a34a;}
-.histo-info{flex:1;min-width:0;}
-.histo-sujet{font-size:13px;font-weight:700;color:#0f172a;word-break:break-word;line-height:1.3;}
-.histo-exp{font-size:11px;color:#64748b;margin-top:1px;word-break:break-word;}
-.histo-meta{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center;}
-.histo-date{font-size:10px;color:#94a3b8;}
-.histo-compte{font-size:10px;background:#eff6ff;color:#1d4ed8;padding:1px 6px;border-radius:4px;font-weight:600;}
-.histo-nr{font-size:10px;background:#fef2f2;color:#dc2626;padding:1px 6px;border-radius:4px;font-weight:600;}
-.histo-body{display:none;padding:0 12px 10px;border-top:1px solid #f1f5f9;}
-.histo-body.open{display:block;}
-.histo-contenu{font-size:12px;color:#475569;line-height:1.7;background:#f8faff;border-radius:8px;padding:10px;border-left:3px solid #bfdbfe;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;margin-top:8px;}
-.histo-envoye-contenu{font-size:12px;color:#166534;line-height:1.7;background:#f0fdf4;border-radius:8px;padding:10px;border-left:3px solid #86efac;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;margin-top:8px;}
-
+/* MAILS avec bouton supprimer */
 .mail-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:6px;overflow:hidden;}
+.mail-item.cache{display:none;}
 .mail-header{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;cursor:pointer;}
 .mail-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
 .mail-dot.recu{background:#1d4ed8;}
@@ -126,13 +114,66 @@ body{font-family:'Inter',sans-serif;background:#f0f5ff;min-height:100vh;}
 .mail-body.open{display:block;}
 .mail-contenu{font-size:12px;color:#475569;line-height:1.7;background:#f8faff;border-radius:8px;padding:10px;border-left:3px solid #bfdbfe;white-space:pre-wrap;word-break:break-word;max-height:250px;overflow-y:auto;margin-top:8px;}
 .reponse-contenu{font-size:12px;color:#166534;line-height:1.7;background:#f0fdf4;border-radius:8px;padding:10px;border-left:3px solid #86efac;white-space:pre-wrap;word-break:break-word;max-height:250px;overflow-y:auto;margin-top:8px;}
+
+/* BOUTONS SUPPRIMER */
+.mail-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.btn-cacher{padding:6px 12px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;background:#fef3c7;color:#d97706;font-family:'Inter',sans-serif;}
+.btn-supprimer{padding:6px 12px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;background:#fef2f2;color:#dc2626;font-family:'Inter',sans-serif;}
+
 .badge-ok{font-size:10px;background:#f0fdf4;color:#16a34a;border:1px solid #bbf7d0;padding:2px 6px;border-radius:4px;font-weight:700;}
 .badge-nr{font-size:10px;background:#fef2f2;color:#dc2626;border:1px solid #fecaca;padding:2px 6px;border-radius:4px;font-weight:700;}
-.section-title{font-size:12px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin:0.8rem 0 0.5rem;}
+
+/* HISTORIQUE */
+.historique-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px;margin-bottom:1rem;}
+.historique-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:12px;}
+.date-picker-row{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;}
+.date-input{background:#f8faff;border:1.5px solid #e2e8f0;border-radius:8px;padding:8px 12px;font-size:13px;font-family:'Inter',sans-serif;color:#0f172a;flex:1;}
+.recherche-btn{background:#1d4ed8;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+.filtre-histo{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;}
+.filtre-histo-btn{padding:5px 10px;border-radius:6px;border:1.5px solid #e2e8f0;font-size:11px;font-weight:700;cursor:pointer;background:#fff;color:#94a3b8;font-family:'Inter',sans-serif;}
+.filtre-histo-btn.actif{background:#1d4ed8;border-color:#1d4ed8;color:#fff;}
+.histo-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:6px;overflow:hidden;}
+.histo-header{display:flex;align-items:flex-start;gap:8px;padding:9px 12px;cursor:pointer;}
+.histo-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.histo-dot.recu{background:#1d4ed8;}
+.histo-dot.envoye{background:#16a34a;}
+.histo-info{flex:1;min-width:0;}
+.histo-sujet{font-size:13px;font-weight:700;color:#0f172a;word-break:break-word;line-height:1.3;}
+.histo-exp{font-size:11px;color:#64748b;margin-top:1px;word-break:break-word;}
+.histo-meta{display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;align-items:center;}
+.histo-date{font-size:10px;color:#94a3b8;}
+.histo-compte{font-size:10px;background:#eff6ff;color:#1d4ed8;padding:1px 6px;border-radius:4px;font-weight:600;}
+.histo-nr{font-size:10px;background:#fef2f2;color:#dc2626;padding:1px 6px;border-radius:4px;font-weight:600;}
+.histo-body{display:none;padding:0 12px 10px;border-top:1px solid #f1f5f9;}
+.histo-body.open{display:block;}
+.histo-contenu{font-size:12px;color:#475569;line-height:1.7;background:#f8faff;border-radius:8px;padding:10px;border-left:3px solid #bfdbfe;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;margin-top:8px;}
+.histo-envoye-contenu{font-size:12px;color:#166534;line-height:1.7;background:#f0fdf4;border-radius:8px;padding:10px;border-left:3px solid #86efac;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto;margin-top:8px;}
+
+/* STATS HISTO */
+.stats-histo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:12px;}
+.stat-histo{background:#f8faff;border-radius:8px;padding:10px 6px;text-align:center;border:1px solid #e2e8f0;}
+.stat-histo-nb{font-size:22px;font-weight:800;}
+.stat-histo-label{font-size:9px;font-weight:700;color:#94a3b8;margin-top:2px;text-transform:uppercase;}
+.stat-histo.bleu .stat-histo-nb{color:#1d4ed8;}
+.stat-histo.vert .stat-histo-nb{color:#16a34a;}
+.stat-histo.rouge .stat-histo-nb{color:#dc2626;}
+
 .vide{text-align:center;padding:2rem;color:#94a3b8;font-size:13px;}
 .erreur{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px;font-size:13px;color:#dc2626;margin-bottom:10px;font-weight:600;}
 .chargement{text-align:center;padding:1rem;color:#94a3b8;font-size:13px;}
 .maj-info{font-size:10px;color:#94a3b8;text-align:center;padding:0.5rem;}
+
+/* MODAL SUPPRESSION */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.5);z-index:100;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#fff;border-radius:20px;padding:1.5rem;width:90%;max-width:320px;box-shadow:0 20px 60px rgba(29,78,216,0.2);}
+.modal-title{font-size:15px;font-weight:800;color:#0f172a;margin-bottom:8px;}
+.modal-sub{font-size:12px;color:#64748b;margin-bottom:1.2rem;line-height:1.5;}
+.modal-actions{display:flex;flex-direction:column;gap:8px;}
+.modal-btn{padding:12px;border-radius:10px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;text-align:center;}
+.modal-btn.orange{background:#fef3c7;color:#d97706;}
+.modal-btn.rouge{background:#fef2f2;color:#dc2626;}
+.modal-btn.gris{background:#f1f5f9;color:#64748b;}
 </style>
 </head>
 <body>
@@ -158,8 +199,21 @@ if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
     <div class="tab actif" onclick="afficherOnglet('stats',this)">&#128202; Stats</div>
     <div class="tab" onclick="afficherOnglet('recus',this)">&#128140; Reçus</div>
     <div class="tab" onclick="afficherOnglet('reponses',this)">&#9989; Réponses</div>
-    <div class="tab" onclick="afficherOnglet('ignores',this)">&#9888;&#65039; Ignorés</div>
+    <div class="tab" onclick="afficherOnglet('ignores',this)">&#9888; Ignorés</div>
     <div class="tab" onclick="afficherOnglet('historique',this)">&#128197; Historique</div>
+  </div>
+</div>
+
+<!-- MODAL SUPPRESSION -->
+<div class="modal-overlay" id="modal-suppr">
+  <div class="modal">
+    <div class="modal-title">Supprimer ce mail ?</div>
+    <div class="modal-sub" id="modal-sujet">—</div>
+    <div class="modal-actions">
+      <button class="modal-btn orange" onclick="confirmerAction('cacher')">&#128065; Cacher (reste dans Gmail)</button>
+      <button class="modal-btn rouge" onclick="confirmerAction('supprimer')">&#128465;&#65039; Supprimer de l'historique</button>
+      <button class="modal-btn gris" onclick="fermerModal()">Annuler</button>
+    </div>
   </div>
 </div>
 
@@ -168,6 +222,23 @@ if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
 
   <!-- STATS -->
   <div id="onglet-stats">
+    <div class="periode-selector">
+      <div class="periode-title">&#128197; Période</div>
+      <div class="periode-btns">
+        <button class="periode-btn actif" onclick="changerPeriode('jour',this)">Aujourd'hui</button>
+        <button class="periode-btn" onclick="changerPeriode('semaine',this)">7 jours</button>
+        <button class="periode-btn" onclick="changerPeriode('mois',this)">30 jours</button>
+        <button class="periode-btn" onclick="changerPeriode('libre',this)">Dates libres</button>
+      </div>
+      <div class="dates-libres" id="dates-libres">
+        <input type="date" id="date-debut" class="date-input-small"/>
+        <span style="font-size:12px;color:#94a3b8;">→</span>
+        <input type="date" id="date-fin" class="date-input-small"/>
+        <button class="appliquer-btn" onclick="appliquerDatesLibres()">OK</button>
+      </div>
+      <div class="periode-info" id="periode-info">Données du jour en cours</div>
+    </div>
+
     <div class="kpi-row">
       <div class="kpi bleu"><div class="kpi-nb" id="k-recus">—</div><div class="kpi-label">Total reçus</div><div class="kpi-sub">Les 2 comptes</div></div>
       <div class="kpi vert"><div class="kpi-nb" id="k-envoyes">—</div><div class="kpi-label">Total envoyés</div><div class="kpi-sub">Les 2 comptes</div></div>
@@ -200,8 +271,8 @@ if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
   <!-- IGNORES -->
   <div id="onglet-ignores" style="display:none;">
     <div class="compte-selector">
-      <button class="compte-btn actif" onclick="switchCompte('ignores','1',this)">&#9888;&#65039; MF Principal</button>
-      <button class="compte-btn" onclick="switchCompte('ignores','2',this)">&#9888;&#65039; MF Compta</button>
+      <button class="compte-btn actif" onclick="switchCompte('ignores','1',this)">&#9888; MF Principal</button>
+      <button class="compte-btn" onclick="switchCompte('ignores','2',this)">&#9888; MF Compta</button>
     </div>
     <div id="ignores-1"></div>
     <div id="ignores-2" style="display:none;"></div>
@@ -215,13 +286,14 @@ if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
         <input type="date" id="date-picker" class="date-input"/>
         <button class="recherche-btn" onclick="rechercherHistorique()">&#128269; Rechercher</button>
       </div>
-      <div class="filtre-compte">
-        <button class="filtre-compte-btn actif" onclick="filtrerHistorique('tous',this)">Tous</button>
-        <button class="filtre-compte-btn" onclick="filtrerHistorique('motors.factory92',this)">MF Principal</button>
-        <button class="filtre-compte-btn" onclick="filtrerHistorique('motorsfactory.compta',this)">MF Compta</button>
-        <button class="filtre-compte-btn" onclick="filtrerHistorique('Reçu',this)">Reçus</button>
-        <button class="filtre-compte-btn" onclick="filtrerHistorique('Envoyé',this)">Envoyés</button>
+      <div class="filtre-histo">
+        <button class="filtre-histo-btn actif" onclick="filtrerHistorique('tous',this)">Tous</button>
+        <button class="filtre-histo-btn" onclick="filtrerHistorique('motors.factory92',this)">MF Principal</button>
+        <button class="filtre-histo-btn" onclick="filtrerHistorique('motorsfactory.compta',this)">MF Compta</button>
+        <button class="filtre-histo-btn" onclick="filtrerHistorique('Reçu',this)">Reçus</button>
+        <button class="filtre-histo-btn" onclick="filtrerHistorique('Envoyé',this)">Envoyés</button>
       </div>
+      <div id="stats-histo-jour"></div>
       <div id="historique-liste"><div class="vide">Sélectionne une date et clique sur Rechercher</div></div>
     </div>
   </div>
@@ -233,25 +305,32 @@ if(sessionStorage.getItem('mf_supervision_auth')!=='1'){
 const API1="https://script.google.com/macros/s/AKfycbya4tlhNw3u_nN37EbR0nrGAGgzt8YuFDv6zair3oDfIky71ccHTTwntYcVWheh1gY0eg/exec";
 const API2="https://script.google.com/macros/s/AKfycbw7n0kPaqYA26ljp59kEW79R2A1qK4j1440ycQ1Tj9QXcj3KI40Vehwm6pdjkZO90EI/exec";
 const API_HISTO="https://script.google.com/macros/s/AKfycbxSV2icJtC41e2gwRYywjFRq_94Mo3BK5Ol8N94mXmroKhx7iVALMgae5Ya-VuGgOC7/exec";
-let s1=null,s2=null,onglet="stats",ouverts={},histoData=[],filtreHisto="tous";
 
-// Initialiser la date d'aujourd'hui
+let s1=null,s2=null,ouverts={},histoData=[],filtreHisto="tous";
+let periode="jour",dateDebutLibre=null,dateFinLibre=null;
+let mailsCache=[];
+let mailASupprimer=null;
+
+// Init dates
 document.addEventListener('DOMContentLoaded',function(){
   var today=new Date();
   var dd=String(today.getDate()).padStart(2,'0');
   var mm=String(today.getMonth()+1).padStart(2,'0');
   var yyyy=today.getFullYear();
-  document.getElementById('date-picker').value=yyyy+'-'+mm+'-'+dd;
+  var dateStr=yyyy+'-'+mm+'-'+dd;
+  document.getElementById('date-picker').value=dateStr;
+  document.getElementById('date-debut').value=dateStr;
+  document.getElementById('date-fin').value=dateStr;
 });
 
 function score(s){
   if(!s||!s.mailsRecus)return{niveau:"moyen",score:"—",verdict:"Pas de données"};
   let sc=100,pb=[];
-  if((s.mailsIgnores||0)>3){sc-=30;pb.push((s.mailsIgnores)+" sans réponse");}
+  if((s.mailsIgnores||0)>3){sc-=30;pb.push((s.mailsIgnores)+" ignorés");}
   else sc-=10*(s.mailsIgnores||0);
   if((s.tempsReponseMoyen||0)>120){sc-=20;pb.push("Réponses lentes");}
-  if((s.mailsEnvoyes||0)===0&&(s.mailsRecus||0)>0){sc-=30;pb.push("Aucun mail envoyé");}
-  if(!s.premiereActivite||s.premiereActivite==="—"){sc-=20;pb.push("Aucune activité");}
+  if((s.mailsEnvoyes||0)===0&&(s.mailsRecus||0)>0){sc-=30;pb.push("Aucun envoyé");}
+  if(!s.premiereActivite||s.premiereActivite==="—"){sc-=20;pb.push("Inactif");}
   sc=Math.max(0,Math.min(100,sc));
   const niv=sc>=75?"bon":sc>=50?"moyen":"mauvais";
   return{niveau:niv,score:sc,verdict:(sc>=75?"✅ Bonne activité":sc>=50?"⚠️ Moyenne — "+pb.join(", "):"❌ Insuffisant — "+pb.join(", "))};
@@ -283,6 +362,71 @@ function verifierAlerte(){
   }
 }
 
+function changerPeriode(p,btn){
+  periode=p;
+  document.querySelectorAll('.periode-btn').forEach(function(b){b.classList.remove('actif');});
+  btn.classList.add('actif');
+  const dl=document.getElementById('dates-libres');
+  dl.classList.toggle('visible',p==='libre');
+  if(p!=='libre')chargerStatsPeriode();
+}
+
+function appliquerDatesLibres(){
+  dateDebutLibre=document.getElementById('date-debut').value;
+  dateFinLibre=document.getElementById('date-fin').value;
+  chargerStatsPeriode();
+}
+
+async function chargerStatsPeriode(){
+  if(periode==='jour'){
+    document.getElementById('periode-info').textContent='Données du jour en cours';
+    rendreStats();
+    return;
+  }
+  
+  const now=new Date();
+  let dateDebut=new Date();
+  let dateFin=new Date();
+  
+  if(periode==='semaine'){
+    dateDebut.setDate(now.getDate()-7);
+    document.getElementById('periode-info').textContent='7 derniers jours';
+  } else if(periode==='mois'){
+    dateDebut.setDate(now.getDate()-30);
+    document.getElementById('periode-info').textContent='30 derniers jours';
+  } else if(periode==='libre'&&dateDebutLibre&&dateFinLibre){
+    dateDebut=new Date(dateDebutLibre);
+    dateFin=new Date(dateFinLibre);
+    document.getElementById('periode-info').textContent='Du '+dateDebutLibre.split('-').reverse().join('/')+' au '+dateFinLibre.split('-').reverse().join('/');
+  }
+  
+  // Charger depuis historique
+  const dd1=String(dateDebut.getDate()).padStart(2,'0');
+  const mm1=String(dateDebut.getMonth()+1).padStart(2,'0');
+  const yyyy1=dateDebut.getFullYear();
+  
+  try{
+    const res=await fetch(API_HISTO+'?date='+encodeURIComponent(dd1+'/'+mm1+'/'+yyyy1)+'&t='+Date.now());
+    const data=await res.json();
+    
+    // Calculer stats depuis historique
+    let recus=0,envoyes=0,ignores=0;
+    data.forEach(function(m){
+      if(String(m['Type']||'')=='Reçu')recus++;
+      if(String(m['Type']||'')=='Envoyé')envoyes++;
+      if(String(m['Réponse requise']||'')==='Oui'&&String(m['Type']||'')==='Reçu')ignores++;
+    });
+    
+    document.getElementById('k-recus').textContent=recus||'—';
+    document.getElementById('k-envoyes').textContent=envoyes||'—';
+    document.getElementById('k-ignores').textContent=ignores||'—';
+    document.getElementById('k-taux').textContent=recus>0?Math.round((envoyes/recus)*100)+'%':'—';
+    document.getElementById('stats-comptes').innerHTML='<div style="text-align:center;padding:1rem;color:#94a3b8;font-size:13px;">Stats sur la période sélectionnée — '+data.length+' enregistrements</div>';
+  }catch(e){
+    document.getElementById('stats-comptes').innerHTML='<div class="erreur">Erreur chargement période</div>';
+  }
+}
+
 function rendreStats(){
   const tr=(s1?s1.mailsRecus||0:0)+(s2?s2.mailsRecus||0:0);
   const te=(s1?s1.mailsEnvoyes||0:0)+(s2?s2.mailsEnvoyes||0:0);
@@ -294,125 +438,88 @@ function rendreStats(){
 
   const comptes=[{s:s1,nom:"MF Principal",email:"motors.factory92@gmail.com"},{s:s2,nom:"MF Compta",email:"motorsfactory.compta@gmail.com"}];
   document.getElementById("stats-comptes").innerHTML=comptes.map(function(c){
-    if(!c.s||!c.s.compte)return'<div class="compte-card"><div style="padding:1rem;text-align:center;color:#94a3b8;font-size:13px;">Pas de données — Sync</div></div>';
+    if(!c.s||!c.s.compte)return'<div class="compte-card"><div style="padding:1rem;text-align:center;color:#94a3b8;font-size:13px;">Pas de données</div></div>';
     const sc=score(c.s);
     const att=calculerAttente(c.s);
-    return'<div class="compte-card">'
-      +'<div class="compte-header"><div><div class="compte-nom">'+c.nom+'</div><div class="compte-email">'+c.email+'</div></div><div class="score-circle '+sc.niveau+'">'+sc.score+'</div></div>'
-      +'<div class="compte-body">'
-      +'<div class="mini-stats">'
-      +'<div class="mini-stat bleu"><div class="mini-stat-nb">'+(c.s.mailsRecus||0)+'</div><div class="mini-stat-label">Reçus</div></div>'
-      +'<div class="mini-stat vert"><div class="mini-stat-nb">'+(c.s.mailsEnvoyes||0)+'</div><div class="mini-stat-label">Envoyés</div></div>'
-      +'<div class="mini-stat rouge"><div class="mini-stat-nb">'+(c.s.mailsIgnores||0)+'</div><div class="mini-stat-label">Ignorés</div></div>'
-      +'</div>'
-      +'<div class="info-ligne"><div class="info-label">✅ Réponses données</div><div class="info-val">'+(c.s.mailsRepondus||0)+'</div></div>'
-      +'<div class="info-ligne"><div class="info-label">⏱ Temps réponse moyen</div><div class="info-val">'+(c.s.tempsReponseMoyen?c.s.tempsReponseMoyen+' min':'—')+'</div></div>'
-      +'<div class="info-ligne"><div class="info-label">🕐 Première activité</div><div class="info-val">'+(c.s.premiereActivite||'—')+'</div></div>'
-      +'<div class="info-ligne"><div class="info-label">🕕 Dernière activité</div><div class="info-val">'+(c.s.derniereActivite||'—')+'</div></div>'
-      +(c.s.heuresActives&&c.s.heuresActives.length>0?'<div class="heures">'+c.s.heuresActives.map(function(h){return'<span class="heure-chip">'+h+'</span>';}).join('')+'</div>':'')
-      +'<div class="attente-grid">'
-      +'<div class="attente-card c1"><div class="attente-nb">'+att.h4+'</div><div class="attente-label">+4h</div></div>'
-      +'<div class="attente-card c2"><div class="attente-nb">'+att.h24+'</div><div class="attente-label">+24h</div></div>'
-      +'<div class="attente-card c3"><div class="attente-nb">'+att.h48+'</div><div class="attente-label">+48h</div></div>'
-      +'</div>'
-      +'<div class="verdict '+sc.niveau+'">'+sc.verdict+'</div>'
-      +'</div></div>';
+    return'<div class="compte-card"><div class="compte-header"><div><div class="compte-nom">'+c.nom+'</div><div class="compte-email">'+c.email+'</div></div><div class="score-circle '+sc.niveau+'">'+sc.score+'</div></div><div class="compte-body"><div class="mini-stats"><div class="mini-stat bleu"><div class="mini-stat-nb">'+(c.s.mailsRecus||0)+'</div><div class="mini-stat-label">Reçus</div></div><div class="mini-stat vert"><div class="mini-stat-nb">'+(c.s.mailsEnvoyes||0)+'</div><div class="mini-stat-label">Envoyés</div></div><div class="mini-stat rouge"><div class="mini-stat-nb">'+(c.s.mailsIgnores||0)+'</div><div class="mini-stat-label">Ignorés</div></div></div><div class="info-ligne"><div class="info-label">✅ Réponses données</div><div class="info-val">'+(c.s.mailsRepondus||0)+'</div></div><div class="info-ligne"><div class="info-label">⏱ Temps réponse moyen</div><div class="info-val">'+(c.s.tempsReponseMoyen?c.s.tempsReponseMoyen+' min':'—')+'</div></div><div class="info-ligne"><div class="info-label">🕐 Première activité</div><div class="info-val">'+(c.s.premiereActivite||'—')+'</div></div><div class="info-ligne"><div class="info-label">🕕 Dernière activité</div><div class="info-val">'+(c.s.derniereActivite||'—')+'</div></div>'+(c.s.heuresActives&&c.s.heuresActives.length>0?'<div class="heures">'+c.s.heuresActives.map(function(h){return'<span class="heure-chip">'+h+'</span>';}).join('')+'</div>':'')+'<div class="attente-grid"><div class="attente-card c1"><div class="attente-nb">'+att.h4+'</div><div class="attente-label">+4h</div></div><div class="attente-card c2"><div class="attente-nb">'+att.h24+'</div><div class="attente-label">+24h</div></div><div class="attente-card c3"><div class="attente-nb">'+att.h48+'</div><div class="attente-label">+48h</div></div></div><div class="verdict '+sc.niveau+'">'+sc.verdict+'</div></div></div>';
   }).join('');
 }
 
-function rendreRecus(stats,id){
+function ouvrirModal(sujet,index,type){
+  mailASupprimer={sujet:sujet,index:index,type:type};
+  document.getElementById('modal-sujet').textContent=sujet;
+  document.getElementById('modal-suppr').classList.add('open');
+}
+
+function fermerModal(){
+  document.getElementById('modal-suppr').classList.remove('open');
+  mailASupprimer=null;
+}
+
+function confirmerAction(action){
+  if(!mailASupprimer)return;
+  const key='mail-'+mailASupprimer.type+'-'+mailASupprimer.index;
+  const el=document.getElementById(key);
+  if(el)el.classList.add('cache');
+  
+  if(action==='supprimer'){
+    // Marquer dans sessionStorage pour ne plus afficher
+    const cached=JSON.parse(sessionStorage.getItem('mails_caches')||'[]');
+    cached.push(mailASupprimer.sujet);
+    sessionStorage.setItem('mails_caches',JSON.stringify(cached));
+  }
+  
+  fermerModal();
+}
+
+function rendreMailsAvecSuppr(mails,id,type){
+  const caches=JSON.parse(sessionStorage.getItem('mails_caches')||'[]');
   const el=document.getElementById(id);
-  if(!stats||!stats.listeMailsRecus||!stats.listeMailsRecus.length){el.innerHTML='<div class="vide">Aucun mail reçu</div>';return;}
-  el.innerHTML=stats.listeMailsRecus.map(function(m,i){
+  if(!mails||!mails.length){el.innerHTML='<div class="vide">Aucun mail</div>';return;}
+  el.innerHTML=mails.map(function(m,i){
+    if(caches.indexOf(m.sujet||'')!==-1)return'';
     const key=id+i;
-    return'<div class="mail-item"><div class="mail-header" onclick="toggleMail(\''+key+'\')"><div class="mail-dot '+(m.necessiteReponse?'recu':'info')+'"></div><div class="mail-info"><div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div><div class="mail-exp">'+(m.expediteur||'').replace(/<.*>/,'').trim()+'</div><div class="mail-meta"><span class="mail-date">'+(m.date||'')+'</span>'+(m.piecesJointes&&m.piecesJointes.length?'<span class="mail-pj">📎 '+m.piecesJointes.length+' PJ</span>':'')+(m.necessiteReponse?'<span class="mail-nr">⚠️ Réponse requise</span>':'')+'</div></div><div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div></div><div class="mail-body '+(ouverts[key]?'open':'')+'" id="mb-'+key+'"><div class="mail-contenu">'+(m.corps||'(vide)').replace(/</g,'&lt;')+'</div></div></div>';
-  }).join('');
-}
-
-function rendreReponses(stats,id){
-  const el=document.getElementById(id);
-  if(!stats||!stats.listeReponsesEnvoyees||!stats.listeReponsesEnvoyees.length){el.innerHTML='<div class="vide">Aucune réponse envoyée</div>';return;}
-  el.innerHTML=stats.listeReponsesEnvoyees.map(function(r,i){
-    const key='rep'+id+i;
-    return'<div class="mail-item"><div class="mail-header" onclick="toggleMail(\''+key+'\')"><div class="mail-dot envoye"></div><div class="mail-info"><div class="mail-sujet">'+(r.sujet||'(sans objet)')+'</div><div class="mail-exp">À : '+(r.destinataire||'').replace(/<.*>/,'').trim()+'</div><div class="mail-meta"><span class="mail-date">'+(r.date||'')+'</span><span class="badge-ok">✓ Envoyé</span></div></div><div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div></div><div class="mail-body '+(ouverts[key]?'open':'')+'" id="mb-'+key+'"><div class="reponse-contenu">'+(r.corps||'(vide)').replace(/</g,'&lt;')+'</div></div></div>';
+    const mailKey='mail-'+type+'-'+id+'-'+i;
+    const dot=type==='envoye'?'envoye':(m.necessiteReponse?'recu':'info');
+    const corps=m.corps||m.corpsReponse||'';
+    const dest=m.destinataire||'';
+    return'<div class="mail-item" id="'+mailKey+'">'
+      +'<div class="mail-header" onclick="toggleMail(\''+key+'\')">'
+      +'<div class="mail-dot '+dot+'"></div>'
+      +'<div class="mail-info">'
+      +'<div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div>'
+      +'<div class="mail-exp">'+(type==='envoye'?'À : '+dest.replace(/<.*>/,'').trim():(m.expediteur||'').replace(/<.*>/,'').trim())+'</div>'
+      +'<div class="mail-meta"><span class="mail-date">'+(m.date||'')+'</span>'
+      +(m.piecesJointes&&m.piecesJointes.length?'<span class="mail-pj">📎 '+m.piecesJointes.length+' PJ</span>':'')
+      +(m.necessiteReponse&&type!=='envoye'?'<span class="mail-nr">⚠️ Réponse requise</span>':'')
+      +(type==='envoye'?'<span class="badge-ok">✓ Envoyé</span>':'')
+      +'</div></div>'
+      +'<div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div></div>'
+      +'<div class="mail-body '+(ouverts[key]?'open':'')+'" id="mb-'+key+'">'
+      +'<div class="'+(type==='envoye'?'reponse-contenu':'mail-contenu')+'">'+corps.replace(/</g,'&lt;')+'</div>'
+      +'<div class="mail-actions">'
+      +'<button class="btn-cacher" onclick="ouvrirModal(\''+((m.sujet||'').replace(/'/g,"\\'"))+'\',\''+id+'-'+i+'\',\''+type+'\')">&#128065; Cacher</button>'
+      +'<button class="btn-supprimer" onclick="ouvrirModal(\''+((m.sujet||'').replace(/'/g,"\\'"))+'\',\''+id+'-'+i+'\',\''+type+'\')">&#128465;&#65039; Supprimer</button>'
+      +'</div></div></div>';
   }).join('');
 }
 
 function rendreIgnores(stats,id){
   const el=document.getElementById(id);
   if(!stats||!stats.mailsNonTraites||!stats.mailsNonTraites.length){el.innerHTML='<div class="vide">✅ Aucun mail ignoré !</div>';return;}
-  el.innerHTML=stats.mailsNonTraites.map(function(m){
-    return'<div class="mail-item"><div class="mail-header"><div class="mail-dot ignore"></div><div class="mail-info"><div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div><div class="mail-exp">'+(m.expediteur||'').replace(/<.*>/,'').trim()+'</div><div class="mail-meta"><span class="mail-date">Depuis '+(m.depuis||'—')+'</span><span class="badge-nr">⚠️ Sans réponse</span></div></div></div></div>';
+  el.innerHTML=stats.mailsNonTraites.map(function(m,i){
+    const mailKey='mail-ignore-'+id+'-'+i;
+    return'<div class="mail-item" id="'+mailKey+'">'
+      +'<div class="mail-header"><div class="mail-dot ignore"></div>'
+      +'<div class="mail-info"><div class="mail-sujet">'+(m.sujet||'(sans objet)')+'</div>'
+      +'<div class="mail-exp">'+(m.expediteur||'').replace(/<.*>/,'').trim()+'</div>'
+      +'<div class="mail-meta"><span class="mail-date">Depuis '+(m.depuis||'—')+'</span><span class="badge-nr">⚠️ Sans réponse</span></div>'
+      +'</div></div>'
+      +'<div style="padding:0 12px 10px;display:flex;gap:6px;">'
+      +'<button class="btn-cacher" onclick="ouvrirModal(\''+((m.sujet||'').replace(/'/g,"\\'"))+'\',\'ignore-'+id+'-'+i+'\',\'ignore\')">&#128065; Cacher</button>'
+      +'<button class="btn-supprimer" onclick="ouvrirModal(\''+((m.sujet||'').replace(/'/g,"\\'"))+'\',\'ignore-'+id+'-'+i+'\',\'ignore\')">&#128465;&#65039; Supprimer</button>'
+      +'</div></div>';
   }).join('');
-}
-
-async function rechercherHistorique(){
-  const datePicker=document.getElementById('date-picker').value;
-  if(!datePicker){alert('Sélectionne une date');return;}
-  
-  // Convertir format YYYY-MM-DD en DD/MM/YYYY
-  const parts=datePicker.split('-');
-  const dateFormatee=parts[2]+'/'+parts[1]+'/'+parts[0];
-  
-  const liste=document.getElementById('historique-liste');
-  liste.innerHTML='<div class="chargement">&#128269; Recherche en cours...</div>';
-  
-  try{
-    const res=await fetch(API_HISTO+'?date='+encodeURIComponent(dateFormatee)+'&t='+Date.now());
-    histoData=await res.json();
-    afficherHistorique();
-  }catch(e){
-    liste.innerHTML='<div class="erreur">Erreur de chargement. Réessaie.</div>';
-  }
-}
-
-function filtrerHistorique(filtre,btn){
-  filtreHisto=filtre;
-  document.querySelectorAll('.filtre-compte-btn').forEach(function(b){b.classList.remove('actif');});
-  btn.classList.add('actif');
-  afficherHistorique();
-}
-
-function afficherHistorique(){
-  const liste=document.getElementById('historique-liste');
-  let filtered=histoData;
-  
-  if(filtreHisto!=='tous'){
-    filtered=histoData.filter(function(m){
-      const compte=String(m['Compte']||'').toLowerCase();
-      const type=String(m['Type']||'');
-      if(filtreHisto==='motors.factory92')return compte.indexOf('motors.factory92')!==-1;
-      if(filtreHisto==='motorsfactory.compta')return compte.indexOf('motorsfactory.compta')!==-1;
-      if(filtreHisto==='Reçu')return type==='Reçu';
-      if(filtreHisto==='Envoyé')return type==='Envoyé';
-      return true;
-    });
-  }
-  
-  if(!filtered.length){
-    liste.innerHTML='<div class="vide">Aucun mail trouvé pour cette date</div>';
-    return;
-  }
-  
-  liste.innerHTML='<div style="font-size:11px;color:#64748b;margin-bottom:8px;font-weight:600;">'+filtered.length+' mail(s) trouvé(s)</div>'
-    +filtered.map(function(m,i){
-      const key='histo'+i;
-      const type=String(m['Type']||'Reçu');
-      const nrep=String(m['Réponse requise']||'')===('Oui');
-      const corps=String(m['Contenu']||'');
-      const date=String(m['Date']||'');
-      const compte=String(m['Compte']||'');
-      const sujet=String(m['Sujet']||'(sans objet)');
-      const exp=String(m['Expéditeur']||'').replace(/<.*>/,'').trim();
-      return'<div class="histo-item"><div class="histo-header" onclick="toggleHisto(\''+key+'\')"><div class="histo-dot '+(type==='Envoyé'?'envoye':'recu')+'"></div><div class="histo-info"><div class="histo-sujet">'+sujet+'</div><div class="histo-exp">'+exp+'</div><div class="histo-meta"><span class="histo-date">'+date+'</span><span class="histo-compte">'+compte+'</span>'+(nrep?'<span class="histo-nr">⚠️ Réponse requise</span>':'')+'</div></div><div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div></div><div class="histo-body '+(ouverts[key]?'open':'')+'" id="hb-'+key+'"><div class="'+(type==='Envoyé'?'histo-envoye-contenu':'histo-contenu')+'">'+corps.replace(/</g,'&lt;')+'</div></div></div>';
-    }).join('');
-}
-
-function toggleHisto(key){
-  ouverts[key]=!ouverts[key];
-  const el=document.getElementById('hb-'+key);
-  if(el)el.classList.toggle('open',ouverts[key]);
-  afficherHistorique();
 }
 
 function toggleMail(key){
@@ -424,13 +531,84 @@ function toggleMail(key){
 
 function rendreAll(){
   rendreStats();
-  rendreRecus(s1,'recus-1');rendreRecus(s2,'recus-2');
-  rendreReponses(s1,'reponses-1');rendreReponses(s2,'reponses-2');
-  rendreIgnores(s1,'ignores-1');rendreIgnores(s2,'ignores-2');
+  rendreMailsAvecSuppr(s1?s1.listeMailsRecus:[],'recus-1','recu');
+  rendreMailsAvecSuppr(s2?s2.listeMailsRecus:[],'recus-2','recu');
+  rendreMailsAvecSuppr(s1?s1.listeReponsesEnvoyees:[],'reponses-1','envoye');
+  rendreMailsAvecSuppr(s2?s2.listeReponsesEnvoyees:[],'reponses-2','envoye');
+  rendreIgnores(s1,'ignores-1');
+  rendreIgnores(s2,'ignores-2');
+}
+
+async function rechercherHistorique(){
+  const datePicker=document.getElementById('date-picker').value;
+  if(!datePicker){alert('Sélectionne une date');return;}
+  const parts=datePicker.split('-');
+  const dateFormatee=parts[2]+'/'+parts[1]+'/'+parts[0];
+  const liste=document.getElementById('historique-liste');
+  liste.innerHTML='<div class="chargement">&#128269; Recherche en cours...</div>';
+  document.getElementById('stats-histo-jour').innerHTML='';
+  try{
+    const res=await fetch(API_HISTO+'?date='+encodeURIComponent(dateFormatee)+'&t='+Date.now());
+    histoData=await res.json();
+    
+    // Stats du jour
+    const recus=histoData.filter(function(m){return String(m['Type']||'')==='Reçu';}).length;
+    const envoyes=histoData.filter(function(m){return String(m['Type']||'')==='Envoyé';}).length;
+    const nrep=histoData.filter(function(m){return String(m['Réponse requise']||'')==='Oui';}).length;
+    document.getElementById('stats-histo-jour').innerHTML='<div class="stats-histo"><div class="stat-histo bleu"><div class="stat-histo-nb">'+recus+'</div><div class="stat-histo-label">Reçus</div></div><div class="stat-histo vert"><div class="stat-histo-nb">'+envoyes+'</div><div class="stat-histo-label">Envoyés</div></div><div class="stat-histo rouge"><div class="stat-histo-nb">'+nrep+'</div><div class="stat-histo-label">Réponse requise</div></div></div>';
+    
+    afficherHistorique();
+  }catch(e){
+    liste.innerHTML='<div class="erreur">Erreur de chargement.</div>';
+  }
+}
+
+function filtrerHistorique(filtre,btn){
+  filtreHisto=filtre;
+  document.querySelectorAll('.filtre-histo-btn').forEach(function(b){b.classList.remove('actif');});
+  btn.classList.add('actif');
+  afficherHistorique();
+}
+
+function afficherHistorique(){
+  const liste=document.getElementById('historique-liste');
+  let filtered=histoData.filter(function(m){
+    if(filtreHisto==='tous')return true;
+    if(filtreHisto==='motors.factory92')return String(m['Compte']||'').indexOf('motors.factory92')!==-1;
+    if(filtreHisto==='motorsfactory.compta')return String(m['Compte']||'').indexOf('motorsfactory.compta')!==-1;
+    if(filtreHisto==='Reçu')return String(m['Type']||'')==='Reçu';
+    if(filtreHisto==='Envoyé')return String(m['Type']||'')==='Envoyé';
+    return true;
+  });
+  
+  if(!filtered.length){liste.innerHTML='<div class="vide">Aucun mail trouvé</div>';return;}
+  
+  liste.innerHTML='<div style="font-size:11px;color:#64748b;margin-bottom:8px;font-weight:600;">'+filtered.length+' mail(s)</div>'
+    +filtered.map(function(m,i){
+      const key='histo'+i;
+      const type=String(m['Type']||'Reçu');
+      const nrep=String(m['Réponse requise']||'')==='Oui';
+      const corps=String(m['Contenu']||'');
+      return'<div class="histo-item"><div class="histo-header" onclick="toggleHisto(\''+key+'\')">'
+        +'<div class="histo-dot '+(type==='Envoyé'?'envoye':'recu')+'"></div>'
+        +'<div class="histo-info"><div class="histo-sujet">'+String(m['Sujet']||'(sans objet)')+'</div>'
+        +'<div class="histo-exp">'+String(m['Expéditeur']||'').replace(/<.*>/,'').trim()+'</div>'
+        +'<div class="histo-meta"><span class="histo-date">'+String(m['Date']||'')+'</span>'
+        +'<span class="histo-compte">'+String(m['Compte']||'')+'</span>'
+        +(nrep?'<span class="histo-nr">⚠️ Réponse requise</span>':'')+'</div></div>'
+        +'<div class="arrow">'+(ouverts[key]?'▲':'▼')+'</div></div>'
+        +'<div class="histo-body '+(ouverts[key]?'open':'')+'" id="hb-'+key+'">'
+        +'<div class="'+(type==='Envoyé'?'histo-envoye-contenu':'histo-contenu')+'">'+corps.replace(/</g,'&lt;')+'</div>'
+        +'</div></div>';
+    }).join('');
+}
+
+function toggleHisto(key){
+  ouverts[key]=!ouverts[key];
+  afficherHistorique();
 }
 
 function afficherOnglet(nom,btn){
-  onglet=nom;
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('actif');});
   btn.classList.add('actif');
   ['stats','recus','reponses','ignores','historique'].forEach(function(o){
@@ -467,10 +645,7 @@ async function charger(){
   btn.classList.remove('loading');btn.textContent='↻ Sync';
 }
 
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('../sw.js').catch(function(){});
-}
-
+if('serviceWorker' in navigator){navigator.serviceWorker.register('../sw.js').catch(function(){});}
 charger();
 setInterval(charger,30*60*1000);
 </script>
